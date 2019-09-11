@@ -51,4 +51,32 @@ class CarController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+    /**
+     * @Route("/modifier/{id}", name="edit_car")
+     *
+     */
+    public function edit(Car $car, Request $request, EntityManagerInterface $manager)
+    {
+
+        $form = $this->createForm(CarType::class, $car);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $manager->persist($car);
+            $manager->flush();
+
+            $this->addFlash(
+                'notice',
+                'Le véhicule a bien été modifié !'
+            );
+
+            return $this->redirectToRoute('home');
+        }
+
+        return $this->render('car/edit.html.twig', [
+            'form' => $form->createView(),
+            'car' => $car
+        ]);
+    }
 }
