@@ -4,7 +4,7 @@ namespace App\Faker;
 
 use Faker\Provider\Base;
 
-class PhoneProvider extends Base
+class CarProvider extends Base
 {
     const BRAND = [
         'Renault',
