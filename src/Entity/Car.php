@@ -5,6 +5,9 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * This class represents the car enity.
+ * @author Bastien Vacherand.
+ *
  * @ORM\Entity(repositoryClass="App\Repository\CarRepository")
  */
 class Car
