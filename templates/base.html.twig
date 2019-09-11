@@ -33,17 +33,18 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    {% for flash_message in app.session.flashBag.get('success') %}
-                        <div class="alert alert-success" role="alert">
-                            <strong>Superbe !</strong> {{ flash_message }}
-                        </div>
-                    {% endfor %}
-
-                    {% for flash_message in app.session.flashBag.get('error') %}
-                        <div class="alert alert-danger" role="alert">
-                            <strong>Oops !</strong> {{ flash_message }}
-                        </div>
-                    {% endfor %}
+                    <div class="modal-body">
+                      {% if app.session.flashbag.peekAll|length > 0 %}
+                        {% set modalShow = true %}
+                        {% for type, messages in app.session.flashbag.all %}
+                            {% for message in messages %}
+                                <div class="{{ type ? type : '' }}">
+                                  {{ message|trans({}, domain|default('messages')) }}
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
+                      {% endif %}
+                    </div>
 
                     {% block header_title %}{% endblock %}
                 </div>
@@ -71,11 +72,14 @@
             </footer>
 
         </div>
+        {% block javascripts %}
 
-        <script
-            src="https://code.jquery.com/jquery-3.4.1.min.js"
-            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-            crossorigin="anonymous">
-        </script>
+          <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/js/bootstrap.bundle.min.js"></script>
+          {% if modalShow is defined %}
+            <script src="{{ asset("js/showModal.js") }}"></script>
+          {% endif %}
+        {% endblock %}
     </body>
 </html>

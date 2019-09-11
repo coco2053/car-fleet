@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\CarRepository;
@@ -33,7 +34,7 @@ class CarController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-             $trick = $form->getData();
+             $car = $form->getData();
 
             $manager->persist($car);
             $manager->flush();
@@ -46,7 +47,7 @@ class CarController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
-        return $this->render('car/add.html.twig', [
+        return $this->render('car/create.html.twig', [
             'form' => $form->createView()
         ]);
     }

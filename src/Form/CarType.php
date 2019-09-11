@@ -1,5 +1,5 @@
 <?php
-namespace App\Form\Type;
+namespace App\Form;
 
 use App\Entity\Car;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -8,7 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class TaskType extends AbstractType
+class CarType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

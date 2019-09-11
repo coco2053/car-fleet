@@ -5,10 +5,11 @@
 {% block body %}
     {% if cars|length == 0 %}
         <div class="alert alert-warning" role="alert">
-            Il n'y a pas encore de véhicules enregistré. <a href="{{ path('car_create') }}" class="btn btn-warning pull-right">Ajouter un véhicule</a>
+            Il n'y a pas encore de véhicules enregistré. <a href="{{ path('create_car') }}" class="btn btn-warning pull-right">Ajouter un véhicule</a>
         </div>
     {% else %}
         <div class="row">
+            <a href="{{ path('create_car') }}" class="btn btn-warning pull-right">Ajouter un véhicule</a>
             <table class="table">
                 <thead>
                 <tr>
