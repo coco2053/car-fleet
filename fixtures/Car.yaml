@@ -5,4 +5,4 @@ App\Entity\Car:
         seatNb: '<seatNb()>'
         fuel: '<fuel()>'
         color: '<color()>'
-        fuel: '<fuel()>'
+        type: '<type()>'
