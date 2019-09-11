@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\CarRepository;
 use App\Form\CarType;
+use App\Entity\Car;
 
 class CarController extends AbstractController
 {

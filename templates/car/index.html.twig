@@ -31,7 +31,7 @@
                         <td>{{ car.seatNb }}</td>
                         <td>{{ car.type }}</td>
                         <td>
-                            {#<a href="{{ path('car_edit', {'id' : car.id}) }}" class="btn btn-success btn-sm">Modifier</a> #}
+                            <a href="{{ path('edit_car', {'id' : car.id}) }}" class="btn btn-success btn-sm">Modifier</a>
                         </td>
                     </tr>
                 {% endfor %}
