@@ -80,4 +80,22 @@ class CarController extends AbstractController
             'car' => $car
         ]);
     }
+
+    /**
+     * @Route("/supprimer/{id}", name="delete_car")
+     */
+    public function delete(Car $car, EntityManagerInterface $manager)
+    {
+
+        $manager->remove($car);
+
+        $manager->flush();
+
+            $this->addFlash(
+                'notice',
+                'Véhicule supprimé !'
+            );
+
+        return $this->redirectToRoute('home');
+    }
 }

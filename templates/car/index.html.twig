@@ -33,6 +33,9 @@
                         <td>
                             <a href="{{ path('edit_car', {'id' : car.id}) }}" class="btn btn-success btn-sm">Modifier</a>
                         </td>
+                        <td>
+                            <a href="{{ path('delete_car', {'id' : car.id}) }}" class="btn btn-danger btn-sm" onclick="return confirm('Etes-vous sûr ?');">Supprimer</a>
+                        </td>
                     </tr>
                 {% endfor %}
                 </tbody>
