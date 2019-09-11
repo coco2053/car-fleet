@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\CarRepository;
+use App\Form\CarType;
 
 class CarController extends AbstractController
 {
@@ -17,6 +19,35 @@ class CarController extends AbstractController
         $cars = $carRepository->findAll();
         return $this->render('car/index.html.twig', [
             'cars' => $cars,
+        ]);
+    }
+
+    /**
+     * @Route("/ajouter", name="create_car")
+     *
+     */
+    public function create(Request $request, EntityManagerInterface $manager)
+    {
+
+        $form = $this->createForm(CarType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+             $trick = $form->getData();
+
+            $manager->persist($car);
+            $manager->flush();
+
+            $this->addFlash(
+                'notice',
+                'Le véhicule a bien été ajouté !'
+            );
+
+            return $this->redirectToRoute('home');
+        }
+
+        return $this->render('car/add.html.twig', [
+            'form' => $form->createView()
         ]);
     }
 }
