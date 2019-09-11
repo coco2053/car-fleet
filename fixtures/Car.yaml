@@ -1,0 +1,8 @@
+App\Entity\Car:
+    # ...
+    phone_{1..100}:
+        brand: '<brand()>'
+        seatNb: '<seatNb()>'
+        fuel: '<fuel()>'
+        color: '<color()>'
+        type: '<type()>'

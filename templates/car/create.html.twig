@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout d'un véhicule{% endblock %}
+
+{% block body %}
+
+<div class="container-fluid">
+    <div class="col-md-2"> </div>
+    <div class="col-md-8 container-trick">
+        <div class="container-in">
+        <h2>Ajouter un véhicule</h2>
+        <div class="form">
+            {{ form_start(form) }}
+            {{ form_row(form._token) }}
+            {{ form_row(form.brand, {'label': 'Marque', 'attr': {'placeholder': 'Entrez la marque du véhicule'}}) }}
+
+            {{ form_row(form.color, {'label': 'Couleur', 'attr': {'placeholder': 'Entrez la couleur du véhicule'}}) }}
+
+            {{ form_row(form.seatNb, {'label': 'Nombre de places', 'attr': {'placeholder': 'Entrez le nombre de places'}}) }}
+
+            {{ form_row(form.fuel, {'label': 'Carburant', 'attr': {'placeholder': 'Entrez le type de carburant'}}) }}
+
+           {{ form_row(form.type, {'label': 'Type', 'attr': {'placeholder': 'Entrez le type de véhicule'}}) }}
+
+           <button type="submit" name="add" class="btn btn-success">Ajouter le véhicule</button>
+            {{ form_end(form, {'render_rest': false}) }}
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2"> </div>
+</div>
+{% endblock %}
