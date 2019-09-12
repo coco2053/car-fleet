@@ -10,7 +10,7 @@
     {% else %}
         <div class="row">
             <a href="{{ path('create_car') }}" class="btn btn-warning pull-right">Ajouter un véhicule</a>
-            <table class="table">
+            <table id="myTable" class="table">
                 <thead>
                 <tr>
                     <th>#</th>
@@ -19,12 +19,14 @@
                     <th>Carburant</th>
                     <th>Nombre de places</th>
                     <th>Type de véhicule</th>
+                    <th>Modifier</th>
+                    <th>Supprimer</th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for car in cars %}
                     <tr>
-                        <th scope="row">{{ loop.index }}</th>
+                        <td scope="row">{{ loop.index }}</td>
                         <td>{{ car.brand }}</td>
                         <td>{{ car.color }}</td>
                         <td>{{ car.fuel }}</td>

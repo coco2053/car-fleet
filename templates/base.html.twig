@@ -15,7 +15,8 @@
 
         <!-- Custom CSS -->
         <link href="{{ asset('css/shop-homepage.css') }}" rel="stylesheet">
-
+        <!-- Datatable CSS -->
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jq-3.2.1/dt-1.10.16/datatables.min.css"/>
     </head>
 
     <body>
@@ -25,6 +26,9 @@
                     <a class="navbar-brand" href="{{ path('home') }}">Car Fleet app</a>
 
                     <img src="{{ asset('images/logo.jpg') }}" alt="Logo" style="width: 200px;" />
+                </div>
+                <div>
+                    <a href="{{ path('admin_car') }}" class="btn btn-primary">Admin</a>
                 </div>
             </div>
         </nav>
@@ -45,13 +49,9 @@
                         {% endfor %}
                       {% endif %}
                     </div>
-
                     {% block header_title %}{% endblock %}
                 </div>
-            </div>
-
             <br />
-
             <div class="row">
                 <div class="col-md-12">
                     {% block body %}{% endblock %}
@@ -59,9 +59,7 @@
             </div>
         </div>
         <!-- /.container -->
-
         <div class="container">
-
             <hr>
             <footer>
                 <div class="row">
@@ -70,16 +68,29 @@
                     </div>
                 </div>
             </footer>
-
         </div>
+
         {% block javascripts %}
 
-          <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/js/bootstrap.bundle.min.js"></script>
-          {% if modalShow is defined %}
-            <script src="{{ asset("js/showModal.js") }}"></script>
-          {% endif %}
+            <script
+                  src="https://code.jquery.com/jquery-3.4.1.min.js"
+                  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+                  crossorigin="anonymous"></script>
+
+            <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+
+            <script src="{{ asset('bundles/datatables/js/datatables.js') }}"></script>
+            {% if datatable is defined %}
+                <script>
+                    $(function() {
+                        $('#car').initDataTables({{ datatable_settings(datatable) }}, { searching: true });
+                    });
+                </script>
+            {% endif %}
+
+            {% if modalShow is defined %}
+                <script src="{{ asset("js/showModal.js") }}"></script>
+            {% endif %}
         {% endblock %}
     </body>
 </html>

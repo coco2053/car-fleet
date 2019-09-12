@@ -9,17 +9,63 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\CarRepository;
 use App\Form\CarType;
 use App\Entity\Car;
+use Omines\DataTablesBundle\Column\TextColumn;
+use Omines\DataTablesBundle\Column\NumberColumn;
+use Omines\DataTablesBundle\DataTableFactory;
+use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
 
 class CarController extends AbstractController
 {
+    private $factory;
+
+    public function __construct(DataTableFactory $factory)
+    {
+        $this->factory = $factory;
+    }
+
+    protected function createDataTable(array $options = [])
+    {
+        return $this->factory->create($options);
+    }
+
+    protected function createDataTableFromType($type, array $typeOptions = [], array $options = [])
+    {
+        return $this->factory->createFromType($type, $typeOptions, $options);
+    }
+
     /**
      * @Route("/", name="home")
+     *
+     */
+    public function listAjax(Request $request)
+    {
+        $table = $this->createDataTable()
+            ->add('brand', TextColumn::class, ['globalSearchable' => true, 'label' => 'Marque', 'className' => 'bold'])
+            ->add('color', TextColumn::class, ['label' => 'Couleur', 'className' => 'bold'])
+            ->add('seatNb', NumberColumn::class, ['label' => 'Places', 'className' => 'bold'])
+            ->add('fuel', TextColumn::class, ['label' => 'Carburant', 'className' => 'bold'])
+            ->add('type', TextColumn::class, ['label' => 'Type', 'className' => 'bold'])
+            ->createAdapter(ORMAdapter::class, [
+                'entity' => Car::class,
+            ])
+            ->handleRequest($request);
+
+        if ($table->isCallback()) {
+            return $table->getResponse();
+        }
+
+        return $this->render('car/list.html.twig', ['datatable' => $table]);
+    }
+
+
+    /**
+     * @Route("/admin", name="admin_car")
      *
      */
     public function list(CarRepository $carRepository)
     {
         $cars = $carRepository->findAll();
-        return $this->render('car/index.html.twig', [
+        return $this->render('car/admin.html.twig', [
             'cars' => $cars,
         ]);
     }
@@ -45,7 +91,7 @@ class CarController extends AbstractController
                 'Le véhicule a bien été ajouté !'
             );
 
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('admin_car');
         }
 
         return $this->render('car/create.html.twig', [
@@ -72,7 +118,7 @@ class CarController extends AbstractController
                 'Le véhicule a bien été modifié !'
             );
 
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('admin_car');
         }
 
         return $this->render('car/edit.html.twig', [
@@ -96,6 +142,6 @@ class CarController extends AbstractController
                 'Véhicule supprimé !'
             );
 
-        return $this->redirectToRoute('home');
+        return $this->redirectToRoute('admin_car');
     }
 }
